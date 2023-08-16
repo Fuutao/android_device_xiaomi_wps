@@ -1,0 +1,25 @@
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE       := losetup.sh
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_TAGS  := optional
+LOCAL_SRC_FILES    := losetup.sh
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE       := start-rootfs.sh
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_TAGS  := optional
+LOCAL_SRC_FILES    := start-rootfs.sh
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE       := tar-rootfs.sh
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_TAGS  := optional
+LOCAL_SRC_FILES    := tar-rootfs.sh
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
+include $(BUILD_PREBUILT)

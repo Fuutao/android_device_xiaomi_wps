@@ -1,0 +1,26 @@
+# Unpinned blobs from yudi-user 13 SKQ1.230401.001 V14.0.6.0.TMHCNXM release-keys
+
+# Assets
+vendor/etc/assets/md5.txt
+vendor/etc/assets/mslgoptimg
+vendor/etc/assets/mslgusrimg
+vendor/etc/assets/rootfs-23.09.08.tgz
+
+# MSLgKeeper
+vendor/lib64/vendor.xiaomi.mslg.keeper@1.0.so
+
+# MSLgRdp
+product/app/MSLgRdp/MSLgRdp.apk:vendor/app/MSLgRdp/MSLgRdp.apk
+product/app/MSLgRdp/lib/arm64/libcrypto.so:vendor/app/MSLgRdp/lib/arm64/libcrypto.so
+product/app/MSLgRdp/lib/arm64/libfreerdp2.so:vendor/app/MSLgRdp/lib/arm64/libfreerdp2.so
+product/app/MSLgRdp/lib/arm64/libfreerdp-android.so:vendor/app/MSLgRdp/lib/arm64/libfreerdp-android.so
+product/app/MSLgRdp/lib/arm64/libfreerdp-client2.so:vendor/app/MSLgRdp/lib/arm64/libfreerdp-client2.so
+product/app/MSLgRdp/lib/arm64/liblinux-ime.so:vendor/app/MSLgRdp/lib/arm64/liblinux-ime.so
+product/app/MSLgRdp/lib/arm64/libssl.so:vendor/app/MSLgRdp/lib/arm64/libssl.so
+product/app/MSLgRdp/lib/arm64/libwinpr2.so:vendor/app/MSLgRdp/lib/arm64/libwinpr2.so
+
+# MSLgService
+vendor/bin/hw/mslgservice
+
+# WpsLauncher
+-product/data-app/WpsLauncher/WpsLauncher.apk:vendor/app/WpsLauncher/WpsLauncher.apk

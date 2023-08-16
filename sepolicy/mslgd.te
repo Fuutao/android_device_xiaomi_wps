@@ -1,0 +1,116 @@
+# Copyright (c) 2023 The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of The Linux Foundation nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+type mslgd, domain, mlstrustedsubject, socket_between_core_and_vendor_violators;
+type mslgd_exec, exec_type, file_type, vendor_file_type;
+init_daemon_domain(mslgd)
+
+set_prop(mslgd, vendor_mslg_prop)
+
+get_prop(mslgd, hwservicemanager_prop)
+allow hwservicemanager mslgd:binder transfer;
+
+allow mslgd hwservicemanager:binder call;
+allow mslgd hal_mslgkeeper_default:binder call;
+
+allow mslgd hal_mslgkeeper_hwservice:hwservice_manager find;
+
+allow mslgd { hal_graphics_composer_default platform_app priv_app system_app untrusted_app }:process signull;
+
+allow mslgd block_device:dir r_dir_perms;
+allow mslgd loop_control_device:chr_file { ioctl read write open };
+allow mslgd loop_device:blk_file rw_file_perms;
+allowxperm mslgd loop_device:blk_file ioctl BLKFLSBUF;
+allowxperm mslgd loop_device:blk_file ioctl {
+ LOOP_SET_FD
+ LOOP_CLR_FD
+ LOOP_SET_STATUS64
+ LOOP_GET_STATUS64
+ LOOP_SET_DIRECT_IO
+ LOOP_CONFIGURE
+};
+
+allow mslgd devpts:chr_file { ioctl read write getattr setattr append open };
+allow mslgd devpts:dir { read open };
+
+allow mslgd fuse:dir create_dir_perms;
+allow mslgd fuse:file create_file_perms;
+
+allow mslgd init:dir search;
+allow mslgd init:file { read getattr open };
+allow mslgd init:lnk_file read;
+
+allow kernel mslgd:fd use;
+allow mslgd kernel:dir search;
+allow mslgd kernel:file { read open };
+allow mslgd kernel:file getattr;
+allow mslgd kernel:key link;
+allow mslgd kernel:lnk_file read;
+
+allow mslgd mslg_app:unix_dgram_socket sendto;
+
+allow mslgd mslg_rootfs_file:dir { read write create getattr setattr rename open watch add_name remove_name search rmdir };
+allow mslgd mslg_rootfs_file:fifo_file { read write create unlink open };
+allow mslgd mslg_rootfs_file:file { ioctl read write create getattr setattr lock append map unlink link rename open watch };
+allow mslgd mslg_rootfs_file:lnk_file { read create getattr setattr link };
+allow mslgd mslg_rootfs_file:sock_file { write create getattr setattr unlink rename };
+
+allow mslgd mslgd_exec:dir { read getattr add_name remove_name search };
+allow mslgd mslgd_exec:file { ioctl read getattr lock map execute open execute_no_trans entrypoint };
+allow mslgd mslgd_exec:lnk_file { read getattr };
+
+allow mslgd mslgd:capability { chown fowner fsetid kill setgid setuid setpcap sys_chroot sys_admin sys_nice sys_resource audit_write };
+allow mslgd mslgd:key { write search };
+allow mslgd mslgd:netlink_audit_socket { read write create nlmsg_relay };
+allow mslgd mslgd:netlink_kobject_uevent_socket { create getattr bind setopt };
+allow mslgd mslgd:netlink_route_socket { read write create getattr bind setopt nlmsg_read nlmsg_readpriv };
+allow mslgd mslgd:process { setexec execmem };
+allow mslgd mslgd:tcp_socket { ioctl shutdown };
+allow mslgd mslgd:tcp_socket { read write create bind connect listen accept setopt name_connect };
+allow mslgd mslgd:udp_socket { read write create getattr connect setopt };
+allow mslgd node:tcp_socket node_bind;
+allow mslgd port:tcp_socket { name_bind name_connect };
+
+allow mslgd proc_filesystems:file { read getattr open };
+allow mslgd proc:file r_file_perms;
+
+allow mslgd su:fd use;
+allow mslgd su:process { transition noatsecure siginh rlimitinh };
+allow mslgd su:unix_stream_socket { accept setopt };
+
+allow mslgd sysfs:dir read;
+allow mslgd tmpfs:chr_file { ioctl read write getattr setattr open };
+allow mslgd tmpfs:dir create_dir_perms;
+allow mslgd tmpfs:file create_file_perms;
+allow mslgd tmpfs:lnk_file read;
+
+allow mslgd untrusted_app_30:unix_dgram_socket sendto;
+
+allow mslgd vendor_file:file read;
+allow mslgd vendor_init:dir search;
+allow mslgd vendor_init:file { read open };
+allow mslgd vendor_toolbox_exec:file execute_no_trans;

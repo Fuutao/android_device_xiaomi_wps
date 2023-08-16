@@ -1,0 +1,10 @@
+<compatibility-matrix version="5.0" type="framework">
+    <hal format="hidl" optional="true">
+        <name>vendor.xiaomi.mslg.keeper</name>
+        <version>1.0</version>
+        <interface>
+            <name>IMSLgKeeper</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+</compatibility-matrix>

@@ -1,0 +1,57 @@
+on post-fs-data
+    mkdir /data/vendor/mslg 0771 root root
+    mkdir /data/vendor/mslg/rootfs 0771 root root
+    mkdir /data/vendor/mslg/rootfs/tablet 0771 root root
+    mkdir  /dev/msl 0777 root system
+    mkdir  /dev/msl/rdp 0777 root system
+    restorecon /dev/msl/rdp
+
+on property:sys.boot_completed=1
+   stop mslgrootfs
+   start mslgservice
+
+on property:persist.vendor.unzip.mslgrootfs=enable && property:vendor.mslgrootfs.version=*
+    start tar_rootfs 
+
+on property:persist.vendor.unzip.mslgrootfs=disable && property:vendor.mslgrootfs.isready=1
+    start losetup_rootfs
+
+on property:vendor.setup.mslgrootfs=1 && property:sys.boot_completed=1 && property:vendor.mslg.mslgoptimg=* && property:vendor.mslg.mslgusrimg=* && property:sys.mslg.mounted=1
+    mount none /dev /data/vendor/mslg/rootfs/dev bind rec
+    mount none /sys /data/vendor/mslg/rootfs/sys bind rec
+    mount none /proc /data/vendor/mslg/rootfs/proc bind rec
+    mount none /dev/msl/rdp /data/vendor/mslg/rootfs/tmp/msl/rdp bind rec
+    mount ext4 ${vendor.mslg.mslgoptimg} /data/vendor/mslg/rootfs/opt ro
+    mount ext4 ${vendor.mslg.mslgusrimg} /data/vendor/mslg/rootfs/usr ro
+    wait /storage/self/primary/Android 0.1
+    mount none /storage/self/primary /data/vendor/mslg/rootfs/tablet bind rec
+    start mslgrootfs
+
+service mslgservice /vendor/bin/hw/mslgservice
+    class core
+    user root
+    seclabel u:r:mslgd:s0
+    disabled
+    oneshot
+
+service tar_rootfs /vendor/bin/tar-rootfs.sh ${vendor.mslgrootfs.version}
+    class core
+    user root
+    seclabel u:r:mslgd:s0
+    disabled
+    oneshot
+
+service losetup_rootfs /vendor/bin/losetup.sh
+    class core
+    user root
+    seclabel u:r:mslgd:s0
+    disabled
+    oneshot
+
+service mslgrootfs /vendor/bin/start-rootfs.sh
+    class core
+    user root
+    seclabel u:r:mslgd:s0
+    disabled
+    oneshot
+
