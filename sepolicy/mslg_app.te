@@ -1,4 +1,4 @@
-# Copyright (c) 2023 The Linux Foundation. All rights reserved.
+# Copyright (c) 2023-2024 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -31,21 +31,13 @@ app_domain(mslg_app);
 bluetooth_domain(mslg_app);
 net_domain(mslg_app);
 
-binder_call(mslg_app, gpuservice)
-
-domain_auto_trans(mslg_app, rs_exec, rs)
-
-unix_socket_connect(mslg_app, property, init)
-
 can_profile_perf(mslg_app)
+create_pty(mslg_app)
 perfetto_producer(mslg_app)
-allow mslg_app trace_data_file:file { read getattr };
-
-type mslg_app_devpts, fs_type;
-type_transition mslg_app devpts:chr_file mslg_app_devpts;
-allow mslg_app mslg_app_devpts:chr_file { ioctl read write open getattr };
-allowxperm mslg_app mslg_app_devpts:chr_file ioctl unpriv_tty_ioctls;
-neverallowxperm * mslg_app_devpts:chr_file ioctl TIOCSTI;
+binder_call(mslg_app, gpuservice)
+get_prop(mslg_app, vendor_mslg_prop)
+set_prop(mslg_app, system_prop)
+domain_auto_trans(mslg_app, rs_exec, rs)
 
 allow mslg_app servicemanager:service_manager list;
 allow mslg_app { vendor_hal_perf_hwservice hal_mslgkeeper_hwservice }:hwservice_manager find;
@@ -69,6 +61,7 @@ allow mslg_app app_data_file:dir { write add_name search };
 allow mslg_app app_data_file:file { create open };
 auditallow mslg_app app_data_file:file execute;
 allow mslg_app privapp_data_file:lnk_file r_file_perms;
+allow mslg_app trace_data_file:file { read getattr };
 
 allow mslg_app asec_apk_file:dir r_dir_perms;
 allow mslg_app asec_apk_file:file r_file_perms;
@@ -90,16 +83,13 @@ allow mslg_app mslg_rootfs_file:file { ioctl read write create getattr setattr l
 allow mslg_app mslg_rootfs_file:lnk_file { read getattr };
 allow mslg_app mslg_rootfs_file:sock_file { write create getattr setattr unlink rename };
 
-allow mslg_app system_prop:property_service set;
 dontaudit mslg_app net_dns_prop:file read;
 
 allow mslg_app preloads_media_file:dir create_dir_perms;
 allow mslg_app preloads_media_file:dir search;
 allow mslg_app preloads_media_file:file create_file_perms;
 
-dontaudit mslg_app proc_stat:file read;
-dontaudit mslg_app proc_uptime:file read;
-dontaudit mslg_app proc_vmstat:file read;
+dontaudit mslg_app { proc_stat proc_uptime proc_vmstat }:file read;
 #allow mslg_app procfs_memory:file { read open };
 
 allow mslg_app simpleperf:process signal;

@@ -1,4 +1,4 @@
-# Copyright (c) 2023 The Linux Foundation. All rights reserved.
+# Copyright (c) 2023-2024 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -26,4 +26,7 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # MSLgRdp
-user=_app seinfo=platform name=com.xiaomi.mslgrdp domain=mslg_app type=app_data_file levelFrom=all
+user=_app seinfo=mslg_app name=com.xiaomi.mslgrdp domain=mslg_app type=app_data_file levelFrom=all
+
+# WpsLauncher
+user=_app seinfo=mslg_app name=com.xiaomi.wpslauncher domain=mslg_app type=app_data_file levelFrom=all

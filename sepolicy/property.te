@@ -1,4 +1,4 @@
-# Copyright (c) 2023 The Linux Foundation. All rights reserved.
+# Copyright (c) 2023-2024 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -25,4 +25,4 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-type vendor_mslg_prop, domain, vendor_property_type, vendor_public_property_type;
+vendor_public_prop(vendor_mslg_prop)
