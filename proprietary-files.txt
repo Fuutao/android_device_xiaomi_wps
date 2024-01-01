@@ -1,10 +1,10 @@
-# Unpinned blobs from yudi-user 13 SKQ1.230401.001 V14.0.6.0.TMHCNXM release-keys
+# Unpinned blobs from yudi-user 14 UKQ1.230804.001 V816.0.2.0.UMHCNXM release-keys
 
 # Assets
 vendor/etc/assets/md5.txt
 vendor/etc/assets/mslgoptimg
 vendor/etc/assets/mslgusrimg
-vendor/etc/assets/rootfs-23.09.08.tgz
+vendor/etc/assets/rootfs-23.09.12.tgz
 
 # MSLgKeeper
 vendor/lib64/vendor.xiaomi.mslg.keeper@1.0.so
